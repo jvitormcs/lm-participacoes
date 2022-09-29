@@ -1,0 +1,34 @@
+{
+  "name": "lmparticipacoes",
+  "version": "1.0.0",
+  "description": "Software de perguntas e respostas",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon index.js",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ragnermoura/game-lmparticipacoes.git"
+  },
+  "author": "Willian Ragner",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ragnermoura/game-lmparticipacoes/issues"
+  },
+  "homepage": "https://github.com/ragnermoura/game-lmparticipacoes#readme",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.2",
+    "express": "^4.18.1",
+    "ip": "^1.1.8",
+    "mysql2": "^2.3.3",
+    "sequelize": "^6.21.4",
+    "swagger-ui-express": "^4.5.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.19"
+  }
+}

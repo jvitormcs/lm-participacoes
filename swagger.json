@@ -1,0 +1,648 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "title": "API para LM Participações",
+      "description": "Essa API foi feita para o jogo de pergunta e respostas da Lm Participações ",
+      "version": "1.0.0"
+    },
+  
+    "servers": [
+      {
+        "url": "http://localhost:3030",
+        "description": "Servidor de Teste"
+      }
+    ],
+    "paths": {
+      "/create": {
+        "post": {
+          "summary": "Rota para Criação de um novo usuário",
+          "description": "Essa rota tem como responsabilidade verificar os dados e registra-los no banco de dados",
+          "tags": ["User"],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                },
+                "examples": {
+                  "Cadastro": {
+                    "value": {
+                      "nome_user": "Bruno",
+                      "sobrenome_user": "Silva",
+                      "email_user": "bru_silva@gmail.com",
+                      "senha_user": "testSenha"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Usuário cadastrado com sucesso!",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "$ref": "#/components/schemas/User"
+                  }
+                }
+              }
+            },
+            "422": {
+              "description": "Usuário já cadastrado!"
+            }
+          }
+        }
+      },
+
+      "/login": {
+        "post": {
+          "summary": "Rota de Login",
+          "description": "nesta rota será feito uma comparação para verificar se o usuário existe e se as credenciais de acesso estão corretas",
+          "tags": ["User"],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/Models/User"
+                },
+                "examples": {
+                  "Login": {
+                    "value": {
+                      "email_user": " vi@dev.com",
+                      "senha_user": "Kmasoaegn@12w32"
+                      
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Conectado com sucesso!",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "$ref": "#/components/schemas/User"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Usuário não cadastrado!"
+            },
+            "421": {
+                "description": "O e-mail é obrigatório"
+            },
+            "422": {
+                "description": "A senha é obrigatória"
+            }
+          }
+        }
+      },
+
+      "/question": {
+        
+        "post": {
+            "summary": "Rota de Questões",
+            "description": "nesta rota será feita a verificação para ver se não existe possíveis para o registro no banco de dados",
+            "tags": ["Question and Answer"],
+            "requestBody": {
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Perguntas"
+                  },
+                  "examples": {
+                    "Questão": {
+                      "value": {
+                        "pergunta": "o que tarda mas nunca falha?"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "responses": {
+              "200": {
+                "description": "Pergunta criada com sucesso",
+                "content": {
+                  "application/json": {
+                    "schema": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/Perguntas"
+                    }
+                  }
+                }
+              },
+              "422": {
+                  "description": "A pergunta não pode ficar em branco"
+              }
+            }
+          }
+      },
+
+      "/getQuestion": {
+
+        "get": {
+            "summary": "Rota de Busca da Questões",
+            "description": "nesta rota é feita uma requisição para o banco de dados para buscar as questões já cadastradas",
+            "tags": ["Question and Answer"],
+            "requestBody": {
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Perguntas"
+                  },
+                  "examples": {
+                    "Questão": {
+                      "value": {
+                        
+                                "id_perguntas": 1,
+                                "pergunta": "O que é o que é, tarda mas não falha"
+                            
+
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "responses": {
+              "200": {
+                "description": "Array com as perguntas",
+                "content": {
+                  "application/json": {
+                    "schema": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/Perguntas"
+                    }
+                  }
+                }
+              },
+              "400": {
+                  "description": "Um erro aconteceu"
+              }
+            }
+          }
+
+      },
+
+      "/answer": {
+        "post": {
+            "summary": "Rota de cadastro das respostas",
+            "description": "nesta rota é feita a validação da resposta e registar no banco",
+            "tags": ["Question and Answer"],
+            "requestBody": {
+                "content": {
+                    "application/json":{
+                        "schema":{"$ref": "#/components/schemas/Respostas"
+                    },
+                    "examples": {
+                        "Resposta": {
+                            "value": {
+                                "id_pergunta": 1,
+                                "resposta": "A justiça"
+                            }
+                        }
+                    }
+                    }
+                }
+            },
+            "responses": {
+                "200": {
+                  "description": "Resposta criada com sucesso",
+                  "content": {
+                    "application/json": {
+                      "schema": {
+                        "type": "object",
+                        "$ref": "#/components/schemas/Perguntas"
+                      }
+                    }
+                  }
+                },
+                "422": {
+                    "description": "A resposta não pode ficar em branco"
+                }
+              }
+        }
+      },
+
+      "/wrongAnswer": {
+        "post": {
+            "summary": "Rota de cadastro das respostas falsas",
+            "description": "nesta rota é feita a validação da resposta falsa e registar no banco",
+            "tags": ["Question and Answer"],
+            "requestBody": {
+                "content": {
+                    "application/json":{
+                        "schema":{"$ref": "#/components/schemas/RespostasFalsas"
+                    },
+                    "examples": {
+                        "Resposta": {
+                            "value": {
+                                "id_pergunta": 1,
+                                "resposta_falsa": "A vida"
+                            }
+                        }
+                    }
+                    }
+                }
+            },
+            "responses": {
+                "200": {
+                  "description": "Resposta Falsa criada com sucesso",
+                  "content": {
+                    "application/json": {
+                      "schema": {
+                        "type": "object",
+                        "$ref": "#/components/schemas/Perguntas"
+                      }
+                    }
+                  }
+                },
+                "422": {
+                    "description": "A resposta falsa não pode ficar em branco"
+                }
+              }
+        }
+      },
+
+      "/getAnswer/:id": {
+        "get": {
+            "summary": "Rota de busca das resposta",
+            "description": "rota responsável por buscar a respostas verdadeira e as falsas passando um id para requisição com um filtro no banco de dados",
+            "tags":["Question and Answer"],
+            "requestBody": {
+                "content": {
+                    "application/json": {
+                        "schema": {"$ref": "#/components/schemas/RespostasFalsas", "ref": "#/components/schemas/Respostas"},
+                        "examples": {
+                            "Respostas": {
+                                "value": {
+                                    "id_pergunta": 1,
+                                    "resposta": "A morte",
+                                    "resposta_falsa": "A vida"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "responses":{
+                "200":{
+                    "description": "Retorna uma array com as respostas verdadeiras e falsas",
+                    "content": {
+                      "application/json": {
+                        "schema": {
+                          "type": "object",
+                          "$ref": "#/components/schemas/Perguntas"
+                        }
+                      }
+                    }
+                  },
+                  "422": {
+                      "description": "O Id é invalido"
+                  }
+            }
+        }
+      },
+
+      "/updateQuestion/:id":{
+        "put": {
+            "sumary": "Rota de atualização da pergunta",
+            "description": "a rota tem como responsabilidade atualizar a pergunta no banco de dados passando o id como parâmetro",
+            "tags": ["Question and Answer"],
+            "requestBody": {
+                "content": {
+                  "application/json": {
+                    "schema": {
+                      "$ref": "#/components/schemas/Perguntas"
+                    },
+                    "examples": {
+                      "Questão": {
+                        "value": {
+                          "pergunta": "o que tarda mas nunca falha?"
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "responses": {
+                "200": {
+                  "description": "Pergunta atualizada com sucesso",
+                  "content": {
+                    "application/json": {
+                      "schema": {
+                        "type": "object",
+                        "$ref": "#/components/schemas/Perguntas"
+                      }
+                    }
+                  }
+                },
+                "422": {
+                    "description": "A pergunta não pode ficar em branco"
+                }
+              }
+        }
+      },
+
+      "/removeQuestion/:id":{
+        "delete": {
+            "sumary": "Rota de remoção da pergunta",
+            "description": "a rota tem como responsabilidade remover a pergunta do banco de dados passando o id como parâmetro",
+            "tags": ["Question and Answer"],
+            "requestBody": {
+                "content": {
+                  "application/json": {
+                    "schema": {
+                      "$ref": "#/components/schemas/Perguntas"
+                    },
+                    "examples": {
+                      "Questão": {
+                        "value": {
+                          "pergunta": "o que tarda mas nunca falha?"
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "responses": {
+                "200": {
+                  "description": "Pergunta removida com sucesso",
+                  "content": {
+                    "application/json": {
+                      "schema": {
+                        "type": "object",
+                        "$ref": "#/components/schemas/Perguntas"
+                      }
+                    }
+                  }
+                },
+                "422": {
+                    "description": "Algo deu errado na remoção"
+                }
+              }
+        }
+      },
+
+      "/cadClient": {
+        "post": {
+            "summary": "Rota de cadastro dos clientes",
+            "description": "rota responsável por registrar o usuário no banco de dados",
+            "tags": ["Cliente"],
+            "requestBody":{
+                "content":{
+                    "application/json":{
+                        "schema":{
+                            "$ref":"#/components/schemas/Clientes"
+                        },
+                        "examples": {
+                            "Cliente":{
+
+                                "value": {
+                                    "nome_cliente": "Jona",
+                                    "email_cliente": "jonas@jojo.com",
+                                    "cpf_cliente": "33222564832",
+                                    "id_premio": 1
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "responses":{
+                "200": {
+                    "description": "Registrado com sucesso",
+                    "content": {
+                      "application/json": {
+                        "schema": {
+                          "type": "object",
+                          "$ref": "#/components/schemas/Clientes"
+                        }
+                      }
+                    }
+                  },
+                  "422": {
+                      "description": "O nome é obrigatório"
+                  },
+                  "423": {"description":"O e-mail é obrigatório"},
+                  "424": {"description":"O CPF é obrigatório"},
+                  "425": {"description":"O id do premio é obrigatório"},
+                  "426": {"description":"Cadastro já foi realizado anteriormente, tente novamente em 5 dias"}
+            }
+        }
+      },
+      
+      "/list": {
+        "get":{
+            "summary": "Rota de busca de clientes",
+            "description": "rota para a busca de todos os usuários no banco de dados",
+            "tags": ["Cliente"],
+            "requestBody":{
+                "content":{
+                    "application/json":{
+                        "schema":{"$ref": "#/components/schemas/Clientes"},
+                        "examples": {
+                            "Usuários":{
+                                "value":{
+                                    "id_cliente": 1,
+                                    "nome_cliente":"Jona",
+                                    "email_cliente":"jonas@jojo.com",
+                                    "cpf_cliente":"33222564832",
+                                    "id_premio": 1
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+      },
+
+      "/rewardCreate": {
+        "post": {
+            "summary" : "Rota de cadastro dos prêmios",
+            "description": "rota feita para validar as informações e registra-las no banco de dados",
+            "tags": ["Premio"],
+            "requestBody": {
+                "content":{
+                    "application/json":{
+                        "schema": {"$ref": "#/components/schemas/Premio"},
+                        "examples":{
+                            "Premio":{
+                                "values": {
+                                        "nome_premio": "Desconto",
+                                        "valor_premio": "20%"
+                                }
+                            }
+                        }
+                    }
+
+                }
+            },
+            "responses": {
+                
+                "200": {
+                    "description": "Premio Cadastrado com sucesso",
+                    "content": {
+                      "application/json": {
+                        "schema": {
+                          "type": "object",
+                          "$ref": "#/components/schemas/Clientes"
+                        }
+                      }
+                    }
+                  },
+                  "422": {
+                      "description": "O nome do premio não pode ficar em branco"
+                  },
+                  "423": {"description":"O valor do premio não pode ficar em branco"}
+
+            }
+        }
+      },
+
+      "/reward": {
+        "get": {
+            "summary": "Rota de busca das premiações",
+            "description": "rota responsável por fazer das premiações no banco de dados",
+            "tags": ["Premio"],
+            "requestBody":{
+                "content":{
+                    "application/json":{
+                        "schema":{"$ref": "#/components/schemas/Premio"},
+                        "examples": {
+                            "Premio":{
+                                "value":{
+                                    "nome_premio": "Desconto",
+                                    "valor_premio": "20%"
+                                    
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+      }
+
+    },
+    "components": {
+      "schemas": {
+        "User": {
+          "type": "object",
+          "properties": {
+            "nome_user": {
+              "type": "string",
+              "required": true
+            },
+  
+            "sobrenome_user": {
+              "type": "string",
+              "required": true
+            },
+  
+            "email_user": {
+              "type": "string",
+              "required": true,
+              "unique": true
+            },
+  
+            "senha_user": {
+              "type": "string",
+              "required": true
+            },
+  
+            "datacreate_user": {
+              "type": "date",
+              "required": true
+            }
+            
+            }
+          },
+
+          "Perguntas": {
+            "type": "object",
+            "properties": {
+              "pergunta": {
+                "type": "string",
+                "required": true
+              }
+            }
+            },
+
+            "Respostas": {
+                "type": "object",
+            "properties": {
+               "id_pergunta": {
+                "type": "number"
+               },
+              "resposta": {
+                "type": "string",
+                "required": true
+              }
+            }
+         },
+            "RespostasFalsas": {
+                "type": "object",
+            "properties": {
+               "id_pergunta": {
+                "type": "number"
+               },
+              "resposta": {
+                "type": "string",
+                "required": true
+              }
+            }
+         },
+
+         "Premio": {
+            "type": "object",
+            "properties": {
+            "nome_premio": {
+                "type" : "string",
+                "required": true
+            },
+            "valor_premio": {
+                "type": "string",
+                "required": true
+            }
+
+         }
+
+        },
+
+        "Clientes": {
+            "type": "object",
+            "properties": {
+            "nome_cliente": {
+                "type" : "string",
+                "required": true
+            },
+            "email_cliente": {
+                "type": "string",
+                "required": true
+            },
+            "cpf_cliente": {
+                "type": "string",
+                "required": true
+            },
+            "id_premio": {
+                "type": "number",
+                "required": true
+            }
+
+         }
+        }
+    
+    }
+
+    }
+}
+  
