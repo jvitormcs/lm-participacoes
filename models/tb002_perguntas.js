@@ -15,6 +15,31 @@ const Tb002_perguntas = db.define('tb002_perguntas',{
         allowNull: false,
         require: true,
     },
+    descricao: {
+        type: DataTypes.STRING(220),
+        allowNull: false,
+        require: true,
+    },
+    resposta:{
+        type: DataTypes.STRING(200),
+        allowNull: false,
+        require: true,
+    },
+    resposta_falsaP:{
+        type: DataTypes.STRING(200),
+        allowNull: false,
+        require: true,
+    },
+    resposta_falsaS:{
+        type: DataTypes.STRING(200),
+        allowNull: false,
+        require: true,
+    },
+    resposta_falsaT:{
+        type: DataTypes.STRING(200),
+        allowNull: false,
+        require: true,
+    },
 
 }, {timestamps: false, freezeTableName: true})
 

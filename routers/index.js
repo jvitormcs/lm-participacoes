@@ -13,9 +13,6 @@ router.post("/login", UserController.login);
 
 router.post('/question', QuestionController.questionCreate);
 router.get('/getQuestion', QuestionController.getQuestions);
-router.post('/answer', QuestionController.answerCreate);
-router.post('/wrongAnswer', QuestionController.wrongAnswerCreate);
-router.get('/getAnswer/:id', QuestionController.getAnswer)
 router.put('/updateQuestion/:id', QuestionController.updateQuestion)
 router.delete('/removeQuestion/:id', QuestionController.removeQuestion)
 

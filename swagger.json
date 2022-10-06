@@ -10,6 +10,10 @@
       {
         "url": "http://localhost:3030",
         "description": "Servidor de Teste"
+      },
+      {
+        "url": "http://http://54.233.223.26:3030",
+        "description": "Servidor de Produção"
       }
     ],
     "paths": {
@@ -189,126 +193,6 @@
             }
           }
 
-      },
-
-      "/answer": {
-        "post": {
-            "summary": "Rota de cadastro das respostas",
-            "description": "nesta rota é feita a validação da resposta e registar no banco",
-            "tags": ["Question and Answer"],
-            "requestBody": {
-                "content": {
-                    "application/json":{
-                        "schema":{"$ref": "#/components/schemas/Respostas"
-                    },
-                    "examples": {
-                        "Resposta": {
-                            "value": {
-                                "id_pergunta": 1,
-                                "resposta": "A justiça"
-                            }
-                        }
-                    }
-                    }
-                }
-            },
-            "responses": {
-                "200": {
-                  "description": "Resposta criada com sucesso",
-                  "content": {
-                    "application/json": {
-                      "schema": {
-                        "type": "object",
-                        "$ref": "#/components/schemas/Perguntas"
-                      }
-                    }
-                  }
-                },
-                "422": {
-                    "description": "A resposta não pode ficar em branco"
-                }
-              }
-        }
-      },
-
-      "/wrongAnswer": {
-        "post": {
-            "summary": "Rota de cadastro das respostas falsas",
-            "description": "nesta rota é feita a validação da resposta falsa e registar no banco",
-            "tags": ["Question and Answer"],
-            "requestBody": {
-                "content": {
-                    "application/json":{
-                        "schema":{"$ref": "#/components/schemas/RespostasFalsas"
-                    },
-                    "examples": {
-                        "Resposta": {
-                            "value": {
-                                "id_pergunta": 1,
-                                "resposta_falsa": "A vida"
-                            }
-                        }
-                    }
-                    }
-                }
-            },
-            "responses": {
-                "200": {
-                  "description": "Resposta Falsa criada com sucesso",
-                  "content": {
-                    "application/json": {
-                      "schema": {
-                        "type": "object",
-                        "$ref": "#/components/schemas/Perguntas"
-                      }
-                    }
-                  }
-                },
-                "422": {
-                    "description": "A resposta falsa não pode ficar em branco"
-                }
-              }
-        }
-      },
-
-      "/getAnswer/:id": {
-        "get": {
-            "summary": "Rota de busca das resposta",
-            "description": "rota responsável por buscar a respostas verdadeira e as falsas passando um id para requisição com um filtro no banco de dados",
-            "tags":["Question and Answer"],
-            "requestBody": {
-                "content": {
-                    "application/json": {
-                        "schema": {"$ref": "#/components/schemas/RespostasFalsas", "ref": "#/components/schemas/Respostas"},
-                        "examples": {
-                            "Respostas": {
-                                "value": {
-                                    "id_pergunta": 1,
-                                    "resposta": "A morte",
-                                    "resposta_falsa": "A vida"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "responses":{
-                "200":{
-                    "description": "Retorna uma array com as respostas verdadeiras e falsas",
-                    "content": {
-                      "application/json": {
-                        "schema": {
-                          "type": "object",
-                          "$ref": "#/components/schemas/Perguntas"
-                        }
-                      }
-                    }
-                  },
-                  "422": {
-                      "description": "O Id é invalido"
-                  }
-            }
-        }
       },
 
       "/updateQuestion/:id":{
@@ -576,31 +460,6 @@
               }
             }
             },
-
-            "Respostas": {
-                "type": "object",
-            "properties": {
-               "id_pergunta": {
-                "type": "number"
-               },
-              "resposta": {
-                "type": "string",
-                "required": true
-              }
-            }
-         },
-            "RespostasFalsas": {
-                "type": "object",
-            "properties": {
-               "id_pergunta": {
-                "type": "number"
-               },
-              "resposta": {
-                "type": "string",
-                "required": true
-              }
-            }
-         },
 
          "Premio": {
             "type": "object",
