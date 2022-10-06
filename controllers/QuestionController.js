@@ -1,20 +1,43 @@
 const Perguntas = require('../models/tb002_perguntas')
-const Respostas = require('../models/tb003_respostas')
-const RespostasFalsas = require('../models/tb006_respostasFalsas')
 
 module.exports = class QuestionController {
 
     static async questionCreate(req,res){
 
-        const { pergunta } = req.body
+        const { pergunta, descricao, resposta, resposta_falsaP, resposta_falsaS, resposta_falsaT } = req.body
         
         if(!pergunta){
             res.status(422).json({message: 'A pergunta não pode ficar em branco'})
             return
         }
+        if(!descricao){
+            res.status(422).json({message: 'A descrição não pode ficar em branco'})
+            return
+        }
+        if(!resposta){
+            res.status(422).json({message: 'A reposta não pode ficar em branco'})
+            return
+        }
+        if(!resposta_falsaP){
+            res.status(422).json({message: 'A Resposta falsa não pode ficar em branco'})
+            return
+        }
+        if(!resposta_falsaS){
+            res.status(422).json({message: 'A Resposta falsa não pode ficar em branco'})
+            return
+        }
+        if(!resposta_falsaT){
+            res.status(422).json({message: 'A Resposta falsa não pode ficar em branco'})
+            return
+        }
 
         const question = {
             pergunta,
+            descricao,
+            resposta,
+            resposta_falsaP,
+            resposta_falsaS,
+            resposta_falsaT
         }
 
         try{
@@ -29,9 +52,15 @@ module.exports = class QuestionController {
     static async updateQuestion(req, res){
 
         const id_perguntas = req.params.id
-
+        const { pergunta, descricao, resposta, resposta_falsaP, resposta_falsaS, resposta_falsaT } = req.body
+       
         const question = {
-            pergunta: req.body.pergunta
+            pergunta,
+            descricao,
+            resposta,
+            resposta_falsaP,
+            resposta_falsaS,
+            resposta_falsaT
         }
 
         if(!question.pergunta){
@@ -63,69 +92,6 @@ module.exports = class QuestionController {
 
     }
 
-    static async answerCreate(req, res) {
-
-        const { id_pergunta, resposta } = req.body
-
-        const verifyQuestion = await Perguntas.findOne({id_perguntas: id_pergunta})
-
-        if(!verifyQuestion){
-            
-            res.status(422).json({message: 'Pergunta não existe'})
-            return
-
-        }
-       
-        if(!resposta){
-            res.status(422).json({message: 'A resposta não pode ficar em branco'})
-            return
-        }
-
-        const answer = {
-            id_pergunta,
-            resposta
-        }
-
-        try{
-            await Respostas.create(answer)
-            res.status(200).json({message: "Resposta registrada com sucesso"})
-        } catch (err) {
-            res.status(500).json({ message: err })
-        }
-
-    }
-
-    static async wrongAnswerCreate(req, res) {
-
-        const { id_pergunta, resposta_falsa } = req.body
-
-        const verifyQuestion = await Perguntas.findOne({id_perguntas: id_pergunta})
-
-        if(!verifyQuestion){
-            
-            res.status(422).json({message: 'Pergunta não existe'})
-            return
-
-        }
-       
-        if(!resposta_falsa){
-            res.status(422).json({message: 'A resposta não pode ficar em branco'})
-            return
-        }
-
-        const wrongAnswer = {
-            id_pergunta,
-            resposta_falsa
-        }
-
-        try{
-            await RespostasFalsas.create(wrongAnswer)
-            res.status(200).json({message: "Resposta registrada com sucesso"})
-        } catch (err) {
-            res.status(500).json({ message: err })
-        }
-
-    }
 
     static async getQuestions(req, res){
 
@@ -133,30 +99,6 @@ module.exports = class QuestionController {
         res.status(200).json(questionData)
     }
 
-    static async getAnswer(req, res){
-
-        const id_pergunta = req.params.id
-
-        if(!id_pergunta){
-            res.status(422).json({message: "passar o id é obrigatório para poder filtrar"})
-            return
-        } 
-
-        const answerData = await Respostas.findAll(
-            {
-                where: {id_pergunta: id_pergunta}
-            }
-        )
-        const wrongAnswerData = await RespostasFalsas.findAll(
-            {
-                where: {id_pergunta: id_pergunta}
-            }
-        )
-
-        const completeAnswers = {answerData, wrongAnswerData}
-
-        res.status(200).json(completeAnswers)
-    }
-
+    
 
 }
