@@ -35,9 +35,9 @@ module.exports = class RewardController {
 
     static async getReward(req, res){
 
-        const rewardData = await Premio.findAll()
+        const premios = await Premio.findAll()
 
-        res.status(200).json(rewardData)
+        res.status(200).json({premios})
 
     }
 
