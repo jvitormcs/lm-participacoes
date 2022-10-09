@@ -36,7 +36,7 @@ module.exports = class UserController {
         const userExists = await User.findOne({where: { email_user: email_user }});
 
         const salt = await bcrypt.genSalt(12)
-        const passwordHash = await bcrypt.hash(senha, salt)
+        const passwordHash = await bcrypt.hash(senha_user, salt)
         
         const user = {
             nome_user,
@@ -75,19 +75,18 @@ module.exports = class UserController {
 
         const user = await User.findOne({where: {email_user: email_user}});
 
-        const password = await User.findOne({where: {senha_user: senha_user}});
-
+        
         if(!user){
             res.status(422).json({message: 'Não há usuário cadastrado com este e-mail!'})
             return
         };
 
-        const passwordMatch = bcrypt.compareSync(senha, password)
+        const passwordMatch = bcrypt.compareSync(senha_user, user.senha_user)        
 
         if(!passwordMatch){
             res.status(422).json({message: 'Senha incorreta'})
         }
-
+        
         res.status(200).json({message: 'Logado com sucesso'})
 
     }
