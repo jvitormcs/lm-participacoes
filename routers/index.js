@@ -19,7 +19,7 @@ router.delete('/removeQuestion/:id', QuestionController.removeQuestion)
 router.post('/cadClient', ClientController.registerClient)
 router.get("/list", ClientController.getClient);
 
-router.post('/rewardCreate', RewardController.rewardRegister)
+router.post('/rewardCreate',imageUpload.single('image'), RewardController.rewardRegister)
 router.get('/reward', RewardController.getReward)
 
 
