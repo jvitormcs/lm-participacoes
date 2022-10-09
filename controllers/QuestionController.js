@@ -65,7 +65,7 @@ module.exports = class QuestionController {
     static async updateQuestion(req, res){
 
         const id_perguntas = req.params.id
-        const { pergunta, descricao, resposta, resposta_falsaP, resposta_falsaS, resposta_falsaT } = req.body
+        const { pergunta, descricao, resposta, resposta_falsaP, resposta_falsaS, resposta_falsaT, resposta_falsaQ } = req.body
        
         const question = {
             pergunta,
