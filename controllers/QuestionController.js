@@ -7,11 +7,9 @@ module.exports = class QuestionController {
 
         const { pergunta, descricao, resposta, resposta_falsaP, resposta_falsaS, resposta_falsaT, resposta_falsaQ } = req.body
 
-        let image = ''
+       
+        let image = req.file.filename
 
-        if(req.file){
-            image = req.file.filename
-        }
 
         if(!pergunta){
             res.status(422).json({message: 'A pergunta não pode ficar em branco'})
