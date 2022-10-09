@@ -8,7 +8,11 @@ module.exports = class QuestionController {
         const { pergunta, descricao, resposta, resposta_falsaP, resposta_falsaS, resposta_falsaT, resposta_falsaQ } = req.body
 
        
-        let image = req.file.filename
+        let image = ''
+
+        if(req.file){
+            image = req.file.filename
+        }
 
 
         if(!pergunta){
