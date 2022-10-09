@@ -82,7 +82,7 @@ module.exports = class UserController {
             return
         };
 
-        const passwordMatch = bcrypt.compareSync(senha, user.senha_user)
+        const passwordMatch = bcrypt.compareSync(senha, password)
 
         if(!passwordMatch){
             res.status(422).json({message: 'Senha incorreta'})
