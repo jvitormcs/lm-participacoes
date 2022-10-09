@@ -15,6 +15,11 @@ const Tb004_premio = db.define('tb004_premio',{
         allowNull: false,
         require: true,
     },
+    image: {
+        type: DataTypes.STRING(220),
+        allowNull: true,
+        require: false,
+    },
     valor_premio: {
         type: DataTypes.STRING(220),
         allowNull: false,

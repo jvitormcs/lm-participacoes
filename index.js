@@ -14,6 +14,8 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(cors())
 
+app.use(express.static('public'))
+
 const routes = require("./routers");
 
 app.use('/docs', SwaggerUi.serve, SwaggerUi.setup(Docs))

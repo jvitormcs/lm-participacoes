@@ -4,8 +4,14 @@ module.exports = class QuestionController {
 
     static async questionCreate(req,res){
 
-        const { pergunta, descricao, resposta, resposta_falsaP, resposta_falsaS, resposta_falsaT } = req.body
-        
+        const { pergunta, descricao, resposta, resposta_falsaP, resposta_falsaS, resposta_falsaT, resposta_falsaQ } = req.body
+
+        let image = ''
+
+        if(req.file){
+            image = req.file.filename
+        }
+
         if(!pergunta){
             res.status(422).json({message: 'A pergunta não pode ficar em branco'})
             return
@@ -30,14 +36,20 @@ module.exports = class QuestionController {
             res.status(422).json({message: 'A Resposta falsa não pode ficar em branco'})
             return
         }
+        if(!resposta_falsaQ){
+            res.status(422).json({message: 'A Resposta falsa não pode ficar em branco'})
+            return
+        }
 
         const question = {
             pergunta,
             descricao,
             resposta,
+            image,
             resposta_falsaP,
             resposta_falsaS,
-            resposta_falsaT
+            resposta_falsaT,
+            resposta_falsaQ
         }
 
         try{
@@ -60,7 +72,8 @@ module.exports = class QuestionController {
             resposta,
             resposta_falsaP,
             resposta_falsaS,
-            resposta_falsaT
+            resposta_falsaT,
+            resposta_falsaQ
         }
 
         if(!question.pergunta){

@@ -15,6 +15,11 @@ const Tb002_perguntas = db.define('tb002_perguntas',{
         allowNull: false,
         require: true,
     },
+    image: {
+        type: DataTypes.STRING(220),
+        allowNull: true,
+        require: false,
+    },
     descricao: {
         type: DataTypes.STRING(220),
         allowNull: false,
@@ -36,6 +41,11 @@ const Tb002_perguntas = db.define('tb002_perguntas',{
         require: true,
     },
     resposta_falsaT:{
+        type: DataTypes.STRING(200),
+        allowNull: false,
+        require: true,
+    },
+    resposta_falsaQ:{
         type: DataTypes.STRING(200),
         allowNull: false,
         require: true,
