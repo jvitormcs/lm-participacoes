@@ -11,8 +11,8 @@ const { imageUpload } = require('../helpers/image-upload')
 router.post("/create", UserController.create);
 router.post("/login", UserController.login);
 
-router.post('/question', QuestionController.questionCreate);
-router.get('/getQuestion',imageUpload.single('image'), QuestionController.getQuestions);
+router.post('/question',imageUpload.single('image'), QuestionController.questionCreate);
+router.get('/getQuestion', QuestionController.getQuestions);
 router.put('/updateQuestion/:id', QuestionController.updateQuestion)
 router.delete('/removeQuestion/:id', QuestionController.removeQuestion)
 
