@@ -5,7 +5,12 @@ module.exports = class RewardController {
 
     static async rewardRegister(req, res){
 
-        const { nome_premio, image, valor_premio } = req.body
+        const { nome_premio, valor_premio } = req.body
+
+        let image =  ''
+        if(req.file){
+            image = req.file.filename
+        }
 
         if(!nome_premio){
             res.status(422).json({message: "O nome do premio não pode ficar em branco"})
@@ -78,7 +83,6 @@ module.exports = class RewardController {
         const id_premio = req.params.id
 
         try{
-
             await Premio.destroy({where: {id_premio: id_premio}})
             res.status(200).json({message: "Pergunta deletada com sucesso"})
         } catch(err){
