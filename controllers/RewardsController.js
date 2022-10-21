@@ -8,6 +8,7 @@ module.exports = class RewardController {
         const { nome_premio, valor_premio } = req.body
 
         let image =  ''
+
         if(req.file){
             image = req.file.filename
         }
@@ -42,7 +43,7 @@ module.exports = class RewardController {
 
         const premios = await Premio.findAll()
 
-        res.status(200).json({premios})
+        res.status(200).json({ premios })
 
     }
 

@@ -27,12 +27,6 @@ module.exports = class ClientController {
             return
         };
 
-        const clientExits = await Clientes.findOne({where: { cpf_cliente : cpf_cliente }});
-
-        const verifyDate = await Clientes.findOne({where: {datacreate_cliente: { [Op.lte]: sequelize.col('tempoBlock') }}}) 
-
-        const validateNew = await Clientes.findOne({where: {tempoBlock: {[Op.lte]: sequelize.fn('Now')}}})
-
         const client = {
 
             nome_cliente,
@@ -41,28 +35,6 @@ module.exports = class ClientController {
             id_premio
 
         }
-
-        if(clientExits) {
-           
-
-            if(verifyDate){   
-                res.status(422).json({message: 'Cadastro já foi realizado anteriormente, tente novamente em 5 dias'});
-                return
-            }
-
-            if(validateNew){
-                try{
-                    await Clientes.create(client)
-                    res.status(200).json({message: "Registrado com sucesso"})
-                } catch (err) {
-                    res.status(500).json({ message: err })
-                }
-                return
-            }
-
-        }
-
-
 
         try{
             await Clientes.create(client)

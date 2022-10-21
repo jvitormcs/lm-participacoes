@@ -6,7 +6,6 @@ module.exports = class QuestionController {
     static async questionCreate(req,res){
 
         const { pergunta, descricao, resposta, resposta_falsaP, resposta_falsaS, resposta_falsaT, resposta_falsaQ } = req.body
-
        
         let image = ''
 
