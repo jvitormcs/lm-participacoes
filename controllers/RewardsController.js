@@ -46,6 +46,20 @@ module.exports = class RewardController {
         res.status(200).json({ premios })
 
     }
+    static async getRewardById(req, res){
+
+        const id_premio = req.params.id
+
+        console.log(id_premio)
+
+        const premios = await Premio.findOne(
+            {
+                where: {id_premio: id_premio}
+            }
+        )
+
+        res.status(200).json({ premios })
+    }
 
     static async rewardUpdate(req, res){
 
