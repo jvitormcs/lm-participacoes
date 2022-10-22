@@ -45,7 +45,7 @@ module.exports = class ClientController {
     static async getClient(req, res){
 
         const clientData = await Clientes.findAll()
-        res.status(200).json(clientData)
+        res.status(200).json({clientes : clientData})
 
     }
 }
