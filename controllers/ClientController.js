@@ -1,5 +1,3 @@
-const sequelize = require('sequelize');
-const { Op } = require('sequelize');
 const Clientes = require('../models/tb005_dadosClientes')
 
 module.exports = class ClientController {

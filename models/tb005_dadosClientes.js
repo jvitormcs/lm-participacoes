@@ -35,10 +35,6 @@ const Tb005_dadosClientes = db.define('tb005_dadosClientes',{
         type: DataTypes.DATE,
         allowNull: false,
         defaultValue: DataTypes.NOW
-    },
-    tempoBlock: {
-        type:DataTypes.DATE,
-        allowNull: true,
     }
 
 }, {timestamps: false, freezeTableName: true})
