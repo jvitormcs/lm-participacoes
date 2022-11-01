@@ -54,6 +54,8 @@ module.exports = class ClientController {
     static async postCpf(req, res){
         const { cpf } = req.body
 
+        console.log(cpf)
+        
         const cpfs = {
             cpf_cliente: cpf
         }
