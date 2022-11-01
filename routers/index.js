@@ -25,5 +25,6 @@ router.get('/reward/:id', RewardController.getRewardById)
 router.put('/rewardUpdate/:id', RewardController.rewardUpdate)
 router.delete('/removeReward/:id', RewardController.removeReward)
 
+router.get('/cpf', ClientController.getCPF)
 
 module.exports = router;

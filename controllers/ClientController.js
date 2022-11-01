@@ -1,4 +1,6 @@
 const Clientes = require('../models/tb005_dadosClientes')
+const Cpf = require('../models/tb003_cpf');
+const { Op } = require('sequelize');
 
 module.exports = class ClientController {
     
@@ -48,4 +50,23 @@ module.exports = class ClientController {
         res.status(200).json({clientes : clientData})
 
     }
+
+
+    static async getCPF(req, res){
+
+        const { cpf } = req.body
+
+        const cpfs = await Cpf.findAll({
+            
+            where: {
+                id_cpf: {
+                    [Op.gt]: 0
+                }
+            }
+        })
+
+        res.status(200).json({dados: cpfs})
+
+    }
+
 }
