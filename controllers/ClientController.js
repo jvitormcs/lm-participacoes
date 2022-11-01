@@ -52,7 +52,7 @@ module.exports = class ClientController {
     }
 
     static async postCpf(req, res){
-        const { cpf } = req.params
+        const { cpf } = req.body
 
         const cpfs = {
             cpf_cliente: cpf
@@ -67,8 +67,6 @@ module.exports = class ClientController {
     }
 
     static async getCPF(req, res){
-
-        
 
         const cpfs = await Cpf.findAll({
             
