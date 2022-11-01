@@ -51,10 +51,24 @@ module.exports = class ClientController {
 
     }
 
+    static async postCpf(req, res){
+        const { cpf } = req.params
+
+        const cpfs = {
+            cpf_cliente: cpf
+        }
+
+        try{
+            Cpf.create(cpfs)
+            res.status(200).json({message : 'sucesso'})
+        } catch (err){
+            res.status(401).json({message : `Erro::${err}`})
+        }
+    }
 
     static async getCPF(req, res){
 
-        const { cpf } = req.body
+        
 
         const cpfs = await Cpf.findAll({
             
